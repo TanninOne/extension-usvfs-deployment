@@ -104,7 +104,7 @@ function init(context: types.IExtensionContext) {
     usvfs.CreateVFS({
       logLevel: 1,
       instanceName: 'vortex-usvfs',
-      debugMode: true,
+      debugMode: false,
       crashDumpPath: path.join(app.getPath('temp'), 'usvfs_dumps'),
       crashDumpType: 1,
     });
