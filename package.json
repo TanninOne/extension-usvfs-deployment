@@ -1,12 +1,12 @@
 {
   "name": "usvfs-deployment",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "deployment method based on the user-space virtual file system (usvfs)",
   "main": "out/index.js",
   "scripts": {
     "tsc": "tsc -p .",
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --display-error-details --progress --profile --color",
-    "copy_lib": "copyfiles -u 4 node_modules/usvfs/build/Release/usvfs.node dist && copyfiles -u 5 node_modules/usvfs/usvfs_build/install/bin/usvfs_x64.dll dist",
+    "copy_lib": "copyfiles -u 4 node_modules/node-usvfs/build/Release/usvfs.node dist && copyfiles -u 5 node_modules/node-usvfs/usvfs_build/install/bin/* dist && copyfiles -u 5 node_modules/node-usvfs/usvfs_build_32/install/bin/* dist",
     "build": "yarn run webpack && yarn run copy_lib && extractInfo"
   },
   "author": "Black Tree Gaming Ltd.",
@@ -14,8 +14,8 @@
   "devDependencies": {
     "@types/bluebird": "^3.5.24",
     "@types/i18next": "^12.1.0",
-    "@types/redux": "^3.6.0",
     "@types/node": "^8.9.2",
+    "@types/redux": "^3.6.0",
     "copyfiles": "^1.2.0",
     "electron": "2.0.12",
     "ts-loader": "^4.4.2",
@@ -24,7 +24,8 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
-    "usvfs": "TanninOne/node-usvfs",
+    "node-usvfs": "TanninOne/node-usvfs",
+    "turbowalk": "Nexus-Mods/node-turbowalk",
     "vortex-api": "Nexus-Mods/vortex-api"
   }
 }
