@@ -30,7 +30,12 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
     return t(this.description);
   }
 
-  public isSupported(state: any, gameId: string, modTypeId: string): string {
+  public isSupported(state: any, gameId: string, modTypeId: string): any {
+    if (process.platform !== 'win32') {
+      return {
+        description: t => t('Only supported on Windows'),
+      };
+    }
     return undefined;
   }
 
@@ -74,6 +79,14 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
   }
 
   public deactivate(installPath: string, dataPath: string, mod: types.IMod): Promise<void> {
+    return Promise.resolve();
+  }
+
+  public prePurge() {
+    return Promise.resolve();
+  }
+
+  public postPurge() {
     return Promise.resolve();
   }
 
@@ -187,17 +200,6 @@ function init(context: types.IExtensionContext) {
         deploying = false;
       }, 100);
       return Promise.resolve();
-    });
-
-    context.api.events.prependListener('deploy-mods', (callback: (error) => void, profileId?: string) => {
-      if ((callback as any).fromusvfs || deploying) {
-        return;
-      }
-      const state: types.IState = context.api.store.getState();
-
-      const profile: types.IProfile = profileId !== undefined
-        ? util.getSafe(state, ['persistent', 'profiles', profileId], undefined)
-        : selectors.activeProfile(state);
     });
 
     context.api.onStateChange(['settings', 'mods', 'activator'], (prev: { [gameId: string]: string }, next: { [gameId: string]: string }) => {

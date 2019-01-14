@@ -1979,8 +1979,8 @@ node-pre-gyp@^0.10.0:
     tar "^4"
 
 node-usvfs@TanninOne/node-usvfs:
-  version "1.0.5"
-  resolved "https://codeload.github.com/TanninOne/node-usvfs/tar.gz/7e735f8451ad3cd50881b8c91840b3acfbd4db02"
+  version "1.0.6"
+  resolved "https://codeload.github.com/TanninOne/node-usvfs/tar.gz/ca933404b8c43711ae90eb9365c6f6b2d1b07f91"
   dependencies:
     autogypi "^0.2.2"
     msbuild "^1.0.2"
@@ -3120,8 +3120,8 @@ vm-browserify@0.0.4:
     indexof "0.0.1"
 
 vortex-api@Nexus-Mods/vortex-api:
-  version "0.16.11-pre.1"
-  resolved "https://codeload.github.com/Nexus-Mods/vortex-api/tar.gz/1e6d904f8f5bb6ffbe02019c00c36a7318ef1939"
+  version "0.17.0-r4"
+  resolved "https://codeload.github.com/Nexus-Mods/vortex-api/tar.gz/251983522f9cac09909399aa7b6f964a0358ce5d"
 
 watchpack@^1.5.0:
   version "1.6.0"

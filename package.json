@@ -1,6 +1,6 @@
 {
   "name": "usvfs-deployment",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "deployment method based on the user-space virtual file system (usvfs)",
   "main": "out/index.js",
   "scripts": {
