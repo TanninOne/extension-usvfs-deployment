@@ -10,6 +10,30 @@ const app = appIn !== undefined ? appIn : remote.app;
 
 const METHOD_ID = 'usvfs-deployment';
 
+const UNSUPPORTED_GAMES = [
+  // starts indirectly via Origin, solutions welcome
+  'thesims4',
+  // starts fine but hangs when opening menu, probably usvfs interfers with opening a pipe, should be fixable
+  'kingdomcomedeliverance',
+  // game crashes on startup, reason unknown
+  'subnautica'
+];
+
+/**
+ * Games known to work:
+ * Fallout: New Vegas
+ * Neverwinter Nights: Enhanced Edition
+ * 
+ * Games assumed to work:
+ * Fallout 3
+ * Fallout 4
+ * Morrowind
+ * Oblivion
+ * Skyrim
+ * Skyrim Special edition
+ * Neverwinter Nights (original)
+ */
+
 class USVFSDeploymentMethod implements types.IDeploymentMethod {
   public id: string = METHOD_ID;
   public name: string = 'USVFS Deployment';
@@ -34,6 +58,15 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
     if (process.platform !== 'win32') {
       return {
         description: t => t('Only supported on Windows'),
+      };
+    }
+    if (UNSUPPORTED_GAMES.indexOf(gameId) !== -1) {
+      return {
+        description: t => t('Incompatible with "{{name}}".', {
+          replace: {
+            name: selectors.gameName(state, gameId),
+          }
+        }),
       };
     }
     return undefined;
