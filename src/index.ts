@@ -15,14 +15,13 @@ const UNSUPPORTED_GAMES = [
   'thesims4',
   // starts fine but hangs when opening menu, probably usvfs interfers with opening a pipe, should be fixable
   'kingdomcomedeliverance',
-  // game crashes on startup, reason unknown
-  'subnautica'
 ];
 
 /**
  * Games known to work:
  * Fallout: New Vegas
  * Neverwinter Nights: Enhanced Edition
+ * Subnautica (only if started directly of course)
  * 
  * Games assumed to work:
  * Fallout 3
