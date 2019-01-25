@@ -214,6 +214,11 @@ function init(context: types.IExtensionContext) {
         W: 'warning',
         E: 'error',
       }[message[tPos + 1]] || 'warning';
+      if ((logLevel === 'error') && (message.indexOf('never released the mutex') !== -1)) {
+        // sometimes reported when closing a hooked application - doesn't seem to have any
+        // negative effect
+        return true;
+      }
       log(logLevel, message.slice(tPos + 4));
       return true;
     }, (err) => {
