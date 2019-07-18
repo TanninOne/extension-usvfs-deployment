@@ -7,11 +7,13 @@
     "tsc": "tsc -p .",
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --display-error-details --progress --profile --color",
     "copy_lib": "copyfiles -u 4 node_modules/node-usvfs/build/Release/usvfs.node dist && copyfiles -u 5 node_modules/node-usvfs/usvfs_build/install/bin/* dist && copyfiles -u 5 node_modules/node-usvfs/usvfs_build_32/install/bin/* dist",
+    "bundle7z": "7z a -t7z usvfs-deployment.7z .\\dist\\*",
     "build": "yarn run webpack && yarn run copy_lib && extractInfo"
   },
   "author": "Black Tree Gaming Ltd.",
   "license": "GPL-3.0",
   "devDependencies": {
+    "7z-bin": "Nexus-Mods/7z-bin",
     "@types/bluebird": "^3.5.27",
     "@types/node": "^10.0.0",
     "@types/redux": "^3.6.0",

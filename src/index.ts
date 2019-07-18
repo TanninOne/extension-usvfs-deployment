@@ -152,8 +152,6 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
 }
 
 function init(context: types.IExtensionContext) {
-  let deploying = false;
-
   context.registerDeploymentMethod(new USVFSDeploymentMethod(context.api));
   (context as any).registerStartHook(1000, 'usvfs-run', call => {
     const state = context.api.store.getState();
@@ -163,8 +161,9 @@ function init(context: types.IExtensionContext) {
     }
     const stackErr = new Error();
     return new Promise((resolve, reject) => {
-      if (deploying) {
-        // don't try to trigger a deployment if we're already in one
+      if (util.getSafe(state, ['session', 'base', 'activity', 'mods'], []).indexOf('deployment') !== -1) {
+        // don't try to trigger a deployment if this is run as part of deployment
+        // (post-processing most likely)
         return resolve();
       }
 
@@ -238,18 +237,6 @@ function init(context: types.IExtensionContext) {
       if (err !== null) {
         context.api.showErrorNotification('USVFS logging no longer monitored', err);
       }
-    });
-
-    context.api.onAsync('will-deploy', () => {
-      deploying = true;
-      return Promise.resolve();
-    });
-    context.api.onAsync('did-deploy', () => {
-      // ensure (?) the flag is only reset after other did-deploy handlers are completed
-      setTimeout(() => {
-        deploying = false;
-      }, 100);
-      return Promise.resolve();
     });
 
     context.api.onStateChange(['settings', 'mods', 'activator'], (prev: { [gameId: string]: string }, next: { [gameId: string]: string }) => {
