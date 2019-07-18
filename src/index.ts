@@ -1,6 +1,6 @@
 import * as Promise from 'bluebird';
 import { app as appIn, remote } from 'electron';
-import * as I18next from 'i18next';
+import I18next from 'i18next';
 import * as path from 'path';
 import * as usvfs from 'node-usvfs';
 import turbowalk from 'turbowalk';
@@ -40,6 +40,9 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
                              + 'applications started from Vortex';
 
   public isFallbackPurgeSafe: boolean = false;
+  // priority: below hardlink deployment and symlink deployment without elevation
+  //    but before elevated symlinking and move deployment
+  public priority: number = 15;
 
   private mAPI: types.IExtensionApi;
   private mDataPath: string;
@@ -49,7 +52,7 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
     this.mAPI = api;
   }
 
-  public detailedDescription(t: I18next.TranslationFunction): string {
+  public detailedDescription(t: I18next.TFunction): string {
     return t(this.description);
   }
 
@@ -94,6 +97,10 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
     return Promise.resolve(this.mDeployed);
   }
 
+  public getDeployedPath(input: string): string {
+    return input;
+  }
+
   public activate(sourcePath: string, sourceName: string, dataPath: string,
                   blackList: Set<string>): Promise<void> {
     return fs.statAsync(sourcePath)
@@ -110,7 +117,7 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
       .catch(() => null);
   }
 
-  public deactivate(installPath: string, dataPath: string, mod: types.IMod): Promise<void> {
+  public deactivate(installPath: string, dataPath: string): Promise<void> {
     return Promise.resolve();
   }
 
@@ -135,6 +142,12 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
 
   public isActive(): boolean {
     return false;
+  }
+
+
+  public isDeployed(installPath: string, dataPath: string, file: types.IDeployedFile): Promise<boolean> {
+    // O(n) meaning the calling function is probably going to be O(n^2)
+    return Promise.resolve(this.mDeployed.find(deployed => deployed.relPath === file.relPath) !== undefined);
   }
 }
 
