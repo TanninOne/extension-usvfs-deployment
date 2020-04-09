@@ -1,6 +1,6 @@
-import * as Promise from 'bluebird';
+import Promise from 'bluebird';
 import { app as appIn, remote } from 'electron';
-import I18next from 'i18next';
+import I18next, { TFunction } from 'i18next';
 import * as path from 'path';
 import * as usvfs from 'node-usvfs';
 import turbowalk from 'turbowalk';
@@ -52,7 +52,7 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
     this.mAPI = api;
   }
 
-  public detailedDescription(t: I18next.TFunction): string {
+  public detailedDescription(t: TFunction): string {
     return t(this.description);
   }
 
@@ -75,7 +75,7 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
   }
 
   public userGate(): Promise<void> {
-    return Promise.resolve();
+    return Promise.resolve(Promise.resolve());
   }
 
   public prepare(dataPath: string,
