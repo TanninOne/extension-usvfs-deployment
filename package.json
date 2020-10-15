@@ -1,6 +1,6 @@
 {
   "name": "usvfs-deployment",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "deployment method based on the user-space virtual file system (usvfs)",
   "main": "out/index.js",
   "scripts": {
@@ -29,6 +29,6 @@
   "dependencies": {
     "node-usvfs": "TanninOne/node-usvfs",
     "turbowalk": "Nexus-Mods/node-turbowalk",
-    "vortex-api": "Nexus-Mods/vortex-api#electron7"
+    "vortex-api": "Nexus-Mods/vortex-api"
   }
 }

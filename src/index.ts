@@ -62,6 +62,13 @@ class USVFSDeploymentMethod implements types.IDeploymentMethod {
         description: t => t('Only supported on Windows'),
       };
     }
+
+    const game: types.IGame = util.getGame(gameId);
+
+    if (game.compatible?.usvfs === false) {
+      return { description: t => t('Game doesn\'t support usfvs') };
+    }
+
     if (UNSUPPORTED_GAMES.indexOf(gameId) !== -1) {
       return {
         description: t => t('Incompatible with "{{name}}".', {
